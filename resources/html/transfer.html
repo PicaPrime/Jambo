@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary Meta Tags -->
+    <title>Transfer Bitcoin - HustleBTC | Send Bitcoin to Other Players</title>
+    <meta
+      name="title"
+      content="Transfer Bitcoin - HustleBTC | Send Bitcoin to Other Players"
+    />
+    <meta
+      name="description"
+      content="Transfer Bitcoin to other HustleBTC players instantly. Secure peer-to-peer Bitcoin transfers within the casino platform."
+    />
+    <meta
+      name="keywords"
+      content="bitcoin transfer, crypto transfer, send bitcoin, peer to peer bitcoin, bitcoin casino transfer"
+    />
+    <meta name="author" content="HustleBTC" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://hustlebtc.com/transfer" />
+    <meta
+      property="og:title"
+      content="Transfer Bitcoin - HustleBTC | Send Bitcoin to Other Players"
+    />
+    <meta
+      property="og:description"
+      content="Send Bitcoin instantly to other HustleBTC players with secure peer-to-peer transfers."
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://hustlebtc.com/transfer" />
+    <meta
+      property="twitter:title"
+      content="Transfer Bitcoin - HustleBTC | Send Bitcoin to Other Players"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+    <link rel="stylesheet" href="styles.css" />
+
+    
+  </head>
+  <body>
+    <!-- Main Account Container -->
+    <div class="modern-user-container">
+      <!-- Account Header -->
+      <div class="modern-profile-header">
+        <div class="profile-left">
+          <img
+            src="https://hustlebtc.com/img/hustle75.png"
+            alt=""
+            class="avatar-img"
+          />
+          <div class="profile-info">
+            <h1 class="modern-username">Your Account</h1>
+            <div class="profile-badges">
+              <span class="badge verified">✓ Verified</span>
+              <span class="badge vip">⭐ Active</span>
+            </div>
+          </div>
+        </div>
+        <div class="profile-actions">
+          <div style="display: flex; gap: 12px; margin-bottom: 12px">
+            <a href="/" class="modern-btn primary">
+              <span>🏠</span>
+              Back to Casino
+            </a>
+            <a href="/logout" class="modern-btn secondary">
+              <span>🚪</span>
+              Logout
+            </a>
+          </div>
+          <div class="joined-date">Joined: Sat Mar 29 2025 [3 months ago]</div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="account-nav-tabs">
+        <a href="/account" class="nav-tab">
+          <span class="nav-tab-text">Overview</span>
+        </a>
+        <a href="/investment" class="nav-tab">
+          <span class="nav-tab-text">Investment</span>
+        </a>
+        <a href="/withdraw" class="nav-tab">
+          <span class="nav-tab-text">Faucet</span>
+        </a>
+        <a href="/transfer" class="nav-tab active">
+          <span class="nav-tab-text">Transfer</span>
+        </a>
+        <a href="/security" class="nav-tab">
+          <span class="nav-tab-text">Security</span>
+        </a>
+      </div>
+
+      <!-- Transfer Dashboard -->
+      <div class="transfer-dashboard">
+        <!-- Transfer Form Section -->
+        <div class="transfer-form-section">
+          <h2 class="section-title">Send Bitcoin to Player</h2>
+
+          <!-- Warning Alert -->
+          <div class="warning-alert">
+            <span class="warning-icon">⚠️</span>
+            <div class="warning-text">
+              <strong>Important:</strong> Check the username carefully before
+              completing the transfer. We cannot reverse any incorrect
+              transfers.
+            </div>
+          </div>
+
+          <!-- Transfer Form -->
+          <form class="transfer-form" action="/transfer-request" method="post">
+            <!-- Hidden fields for security -->
+            <input
+              style="display: none"
+              type="text"
+              name="fakeusernameremembered"
+            />
+            <input
+              style="display: none"
+              type="password"
+              name="fakepasswordremembered"
+            />
+
+            <div class="form-group">
+              <label for="amount" class="form-label">
+                <span>💰</span>
+                Amount (Satoshis)
+              </label>
+              <input
+                type="number"
+                id="amount"
+                name="amount"
+                placeholder="Enter amount in satoshis"
+                min="100"
+                step="1"
+                class="form-input"
+                required
+              />
+              <div class="form-hint">Minimum transfer: 100 satoshis</div>
+            </div>
+
+            <div class="form-group">
+              <label for="to-user" class="form-label">
+                <span>👤</span>
+                Recipient Username
+              </label>
+              <input
+                type="text"
+                id="to-user"
+                name="to-user"
+                placeholder="Enter recipient's username"
+                class="form-input"
+                required
+              />
+              <div class="form-hint">
+                Double-check the username before sending
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="password" class="form-label">
+                <span>🔒</span>
+                Your Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your account password"
+                class="form-input"
+                autocomplete="off"
+                required
+              />
+            </div>
+
+            <!-- 2FA Field (if enabled) -->
+            <div class="form-group" id="mfa-group" style="display: none">
+              <label for="otp" class="form-label">
+                <span>🔐</span>
+                2FA Code
+              </label>
+              <input
+                type="text"
+                id="otp"
+                name="otp"
+                placeholder="Enter 6-digit 2FA code"
+                class="form-input"
+                autocomplete="off"
+                pattern="[0-9]{6}"
+                maxlength="6"
+              />
+              <div class="form-hint">
+                Enter the 6-digit code from your authenticator app
+              </div>
+            </div>
+
+            <!-- Transfer Preview -->
+            <div class="transfer-preview">
+              <div class="preview-item">
+                <span class="preview-label">Transfer Amount:</span>
+                <span class="preview-value" id="preview-amount">0 sats</span>
+              </div>
+              <div class="preview-item">
+                <span class="preview-label">Recipient:</span>
+                <span class="preview-value" id="preview-recipient">-</span>
+              </div>
+              <div class="preview-item">
+                <span class="preview-label">Transfer Fee:</span>
+                <span class="preview-value">0 sats (Free)</span>
+              </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+              <span>💸</span>
+              Send Transfer
+            </button>
+          </form>
+        </div>
+
+        <!-- Transfer History Section -->
+        <div class="transfer-history-section">
+          <h3 class="section-title">Transfer History</h3>
+
+          <div class="transfer-history-table">
+            <div class="table-header">
+              <div>From</div>
+              <div>Amount</div>
+              <div>To</div>
+              <div class="hide-mobile">Date</div>
+            </div>
+
+            <!-- Sample Transfer History (Replace with actual data) -->
+            <div class="table-row">
+              <div class="table-cell">YourUsername</div>
+              <div class="table-cell amount-cell amount-negative">
+                -1,000 sats
+              </div>
+              <div class="table-cell">PlayerABC</div>
+              <div class="table-cell date-cell hide-mobile">2 hours ago</div>
+            </div>
+
+            <div class="table-row">
+              <div class="table-cell">PlayerXYZ</div>
+              <div class="table-cell amount-cell amount-positive">
+                +500 sats
+              </div>
+              <div class="table-cell">YourUsername</div>
+              <div class="table-cell date-cell hide-mobile">1 day ago</div>
+            </div>
+
+            <div class="table-row">
+              <div class="table-cell">YourUsername</div>
+              <div class="table-cell amount-cell amount-negative">
+                -2,500 sats
+              </div>
+              <div class="table-cell">CryptoKing</div>
+              <div class="table-cell date-cell hide-mobile">3 days ago</div>
+            </div>
+
+            <!-- Empty State (show when no transfers) -->
+            <!-- 
+            <div class="empty-state">
+              <div class="empty-icon">📤</div>
+              <div class="empty-text">No transfers yet</div>
+              <div class="empty-subtext">Your transfer history will appear here</div>
+            </div>
+            -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
+
+    <script>
+      // Update preview when form values change
+      document.addEventListener('DOMContentLoaded', function () {
+        const amountInput = document.getElementById('amount');
+        const recipientInput = document.getElementById('to-user');
+        const previewAmount = document.getElementById('preview-amount');
+        const previewRecipient = document.getElementById('preview-recipient');
+
+        function updatePreview() {
+          const amount = amountInput.value || '0';
+          const recipient = recipientInput.value || '-';
+
+          previewAmount.textContent = `${amount} sats`;
+          previewRecipient.textContent = recipient;
+        }
+
+        amountInput.addEventListener('input', updatePreview);
+        recipientInput.addEventListener('input', updatePreview);
+
+        // Show/hide 2FA field based on user settings
+        // This would be determined by server-side data
+        // For demo purposes, uncomment the line below to show 2FA field
+        // document.getElementById('mfa-group').style.display = 'flex';
+      });
+    </script>
+  </body>
+</html>

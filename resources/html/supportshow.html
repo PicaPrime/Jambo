@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary Meta Tags -->
+  <title>
+    Support Reply - HustleBTC | Bitcoin Casino Support Chat
+  </title>
+  <meta name="title" content="Support Reply - HustleBTC | Bitcoin Casino Support Chat" />
+  <meta name="description"
+    content="Continue your support conversation with HustleBTC. Secure chat interface for resolving your Bitcoin casino questions and issues." />
+  <meta name="keywords" content="bitcoin casino support, crypto gambling help, support chat, customer service" />
+  <meta name="author" content="HustleBTC" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://hustlebtc.com/support/reply" />
+  <meta property="og:title" content="Support Reply - HustleBTC | Bitcoin Casino Support Chat" />
+  <meta property="og:description"
+    content="Secure support chat for HustleBTC Bitcoin casino. Get help with your account, deposits, withdrawals, and gameplay questions." />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://hustlebtc.com/support/reply" />
+  <meta property="twitter:title" content="Support Reply - HustleBTC | Bitcoin Casino Support Chat" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+  <link rel="stylesheet" href="../../public/styles.css" />
+
+</head>
+
+<body>
+  <div class="support-container">
+    <!-- Support Header -->
+    <div class="support-header">
+      <div class="header-content">
+        <div class="header-top">
+          <a href="/support" class="back-btn">
+            <span>←</span>
+            Back
+          </a>
+          <div class="ticket-info">
+            <h1 class="ticket-title" id="ticket-subject">Loading...</h1>
+            <div class="ticket-meta">
+              <span class="status-badge status-open" id="ticket-status">
+                <span>●</span>
+                Open
+              </span>
+              <span id="ticket-id">Ticket #12345</span>
+            </div>
+          </div>
+          <form id="close-ticket-form" style="display: none;">
+            <input type="hidden" name="id" id="close-ticket-id" />
+            <button type="submit" class="close-ticket-btn">
+              <span>✕</span>
+              Close
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message" id="success-message"></div>
+
+    <!-- Chat Container -->
+    <div class="chat-container">
+      <!-- Messages Area -->
+      <div class="messages-area" id="messages-area">
+        <!-- Messages will be loaded here -->
+        <div class="empty-messages" id="empty-state">
+          <div class="empty-icon">💬</div>
+          <div class="empty-text">Loading conversation...</div>
+          <div class="empty-subtext">Please wait while we fetch your messages</div>
+        </div>
+      </div>
+
+      <!-- Reply Form -->
+      <div class="reply-form" id="reply-form">
+        <form id="message-form">
+          <input type="hidden" name="id" id="reply-ticket-id" />
+          <div class="form-group" style="flex-direction: row;">
+            <textarea name="message" id="message-input" class="message-input" placeholder="Type your message here..."
+              maxlength="1000" required></textarea>
+            <button type="submit" class="send-btn" id="send-btn" style="margin-top: 20px;
+    max-height: 40px;">
+              <span>Send</span>
+            </button>
+          </div>
+          <div class="char-counter" id="char-counter">0/1000</div>
+        </form>
+      </div>
+
+      <!-- Ticket Closed Message -->
+      <div class="ticket-closed-message" id="closed-message" style="display: none;">
+        <h3>✓ This Ticket is Solved</h3>
+        <p>This support ticket has been closed and marked as resolved. If you need further assistance, please create a
+          new ticket.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Input sanitization function
+    function sanitizeInput(input) {
+      const div = document.createElement('div');
+      div.textContent = input;
+      return div.innerHTML
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#x27;')
+        .replace(/\//g, '&#x2F;');
+    }
+
+    // Create message element (without timestamps)
+    function createMessageElement(message, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${isUser ? 'user' : 'support'}`;
+
+      const sanitizedMessage = sanitizeInput(message.message || message);
+      const username = isUser ? 'You' : 'Support Team';
+
+      messageDiv.innerHTML = `
+          <div class="message-bubble">
+            <div class="message-header">
+              <span>${username}</span>
+            </div>
+            <div class="message-content">${sanitizedMessage}</div>
+          </div>
+        `;
+
+      return messageDiv;
+    }
+
+    // Load sample data (replace with actual API calls)
+    function loadTicketData() {
+      // Sample ticket data
+      const ticketData = {
+        id: '12345',
+        subject: 'Withdrawal Issue - Bitcoin Transaction Delayed',
+        status: 0, // 0 = open, 1 = closed
+        messages: [
+          {
+            id: 1,
+            user_id: 123,
+            username: 'user123',
+            message: 'Hello, I initiated a Bitcoin withdrawal 2 hours ago but it hasn\'t been processed yet. Can you please check the status?',
+            is_support: false
+          },
+          {
+            id: 2,
+            user_id: null,
+            username: 'Support',
+            message: 'Thank you for contacting us. I\'ve checked your withdrawal request and it\'s currently in our processing queue. Bitcoin withdrawals typically take 1-6 hours to process depending on network congestion.',
+            is_support: true
+          },
+          {
+            id: 3,
+            user_id: 123,
+            username: 'user123',
+            message: 'Thank you for the update. Is there any way to expedite this? I need the funds urgently.',
+            is_support: false
+          },
+          {
+            id: 4,
+            user_id: null,
+            username: 'Support',
+            message: 'I understand your urgency. I\'ve escalated your withdrawal to our priority queue. You should receive your Bitcoin within the next 30 minutes. I\'ll monitor this personally and update you once it\'s sent.',
+            is_support: true
+          }
+        ]
+      };
+
+      // Update ticket info
+      document.getElementById('ticket-subject').textContent = ticketData.subject;
+      document.getElementById('ticket-id').textContent = `Ticket #${ticketData.id}`;
+
+      // Update status
+      const statusElement = document.getElementById('ticket-status');
+      const closeForm = document.getElementById('close-ticket-form');
+      const replyForm = document.getElementById('reply-form');
+      const closedMessage = document.getElementById('closed-message');
+
+      if (ticketData.status === 0) {
+        statusElement.className = 'status-badge status-open';
+        statusElement.innerHTML = '<span>●</span> Open';
+        closeForm.style.display = 'block';
+        replyForm.style.display = 'block';
+        closedMessage.style.display = 'none';
+      } else {
+        statusElement.className = 'status-badge status-closed';
+        statusElement.innerHTML = '<span>●</span> Closed';
+        closeForm.style.display = 'none';
+        replyForm.classList.add('disabled');
+        closedMessage.style.display = 'block';
+      }
+
+      // Set ticket IDs for forms
+      document.getElementById('close-ticket-id').value = ticketData.id;
+      document.getElementById('reply-ticket-id').value = ticketData.id;
+
+      // Load messages
+      loadMessages(ticketData.messages, 123); // 123 is current user ID
+    }
+
+    // Load messages
+    function loadMessages(messages, currentUserId) {
+      const messagesArea = document.getElementById('messages-area');
+      const emptyState = document.getElementById('empty-state');
+
+      // Clear empty state
+      emptyState.style.display = 'none';
+
+      // Clear existing messages
+      messagesArea.innerHTML = '';
+
+      if (messages.length === 0) {
+        emptyState.style.display = 'flex';
+        messagesArea.appendChild(emptyState);
+        return;
+      }
+
+      // Add messages
+      messages.forEach(message => {
+        const isUser = message.user_id === currentUserId;
+        const messageElement = createMessageElement(message, isUser);
+        messagesArea.appendChild(messageElement);
+      });
+
+      // Scroll to bottom
+      messagesArea.scrollTop = messagesArea.scrollHeight;
+    }
+
+    // Character counter
+    function updateCharCounter() {
+      const input = document.getElementById('message-input');
+      const counter = document.getElementById('char-counter');
+      const length = input.value.length;
+      const maxLength = 1000;
+
+      counter.textContent = `${length}/${maxLength}`;
+
+      if (length > maxLength * 0.9) {
+        counter.className = 'char-counter error';
+      } else if (length > maxLength * 0.8) {
+        counter.className = 'char-counter warning';
+      } else {
+        counter.className = 'char-counter';
+      }
+    }
+
+    // Show success message
+    function showSuccessMessage(message) {
+      const successDiv = document.getElementById('success-message');
+      successDiv.textContent = message;
+      successDiv.classList.add('show');
+
+      setTimeout(() => {
+        successDiv.classList.remove('show');
+      }, 3000);
+    }
+
+    // Handle form submissions
+    document.addEventListener('DOMContentLoaded', function () {
+      // Load ticket data
+      loadTicketData();
+
+      // Message input character counter
+      const messageInput = document.getElementById('message-input');
+      messageInput.addEventListener('input', updateCharCounter);
+
+      // Auto-resize textarea
+      messageInput.addEventListener('input', function () {
+        this.style.height = 'auto';
+        this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+      });
+
+      // Handle message form submission
+      document.getElementById('message-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const message = formData.get('message').trim();
+        const ticketId = formData.get('id');
+
+        if (!message) {
+          return;
+        }
+
+        // Sanitize and validate input
+        if (message.length > 1000) {
+          alert('Message is too long. Please keep it under 1000 characters.');
+          return;
+        }
+
+        const sendBtn = document.getElementById('send-btn');
+        const originalContent = sendBtn.innerHTML;
+
+        // Show loading state
+        sendBtn.disabled = true;
+        sendBtn.innerHTML = '<div class="loading"></div>';
+
+        // Simulate API call
+        setTimeout(() => {
+          // Add message to chat
+          const messagesArea = document.getElementById('messages-area');
+          const newMessage = createMessageElement({
+            message: message
+          }, true);
+
+          messagesArea.appendChild(newMessage);
+          messagesArea.scrollTop = messagesArea.scrollHeight;
+
+          // Clear form
+          messageInput.value = '';
+          messageInput.style.height = 'auto';
+          updateCharCounter();
+
+          // Reset button
+          sendBtn.disabled = false;
+          sendBtn.innerHTML = originalContent;
+
+          // Show success message
+          showSuccessMessage('Message sent successfully!');
+
+          // Simulate support response after 2 seconds
+          setTimeout(() => {
+            const supportResponse = createMessageElement({
+              message: 'Thank you for your message. We have received your update and will respond shortly.'
+            }, false);
+
+            messagesArea.appendChild(supportResponse);
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+          }, 2000);
+
+        }, 1000);
+      });
+
+      // Handle close ticket form
+      document.getElementById('close-ticket-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (!confirm('Are you sure you want to close this ticket? This action cannot be undone.')) {
+          return;
+        }
+
+        const closeBtn = this.querySelector('.close-ticket-btn');
+        const originalContent = closeBtn.innerHTML;
+
+        // Show loading state
+        closeBtn.disabled = true;
+        closeBtn.innerHTML = '<div class="loading"></div>';
+
+        // Simulate API call
+        setTimeout(() => {
+          // Update UI to show closed state
+          const statusElement = document.getElementById('ticket-status');
+          const replyForm = document.getElementById('reply-form');
+          const closedMessage = document.getElementById('closed-message');
+
+          statusElement.className = 'status-badge status-closed';
+          statusElement.innerHTML = '<span>●</span> Closed';
+
+          this.style.display = 'none';
+          replyForm.classList.add('disabled');
+          closedMessage.style.display = 'block';
+
+          showSuccessMessage('Ticket closed successfully!');
+        }, 1000);
+      });
+
+      // Handle Enter key in textarea (Shift+Enter for new line)
+      messageInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          document.getElementById('message-form').dispatchEvent(new Event('submit'));
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
