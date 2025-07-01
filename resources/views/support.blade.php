@@ -9,7 +9,7 @@
         <span style="font-size: 2rem; color: #000">₿</span>
       </div>
       <div class="profile-info">
-        <h1 class="modern-username">{{ 'Your Account' }}</h1>
+        <h1 class="modern-username">{{ $user->name ?? 'Your Account' }}</h1>
         <div class="profile-badges">
           <span class="badge verified">✓ Verified</span>
           <span class="badge vip">⭐ Active</span>
@@ -31,7 +31,7 @@
           @csrf
         </form>
       </div>
-      <div class="joined-date">Joined: {{ "date" }}</div>
+      <div class="joined-date">Joined: {{ $joinedDate ?? '' }}</div>
     </div>
   </div>
   <!-- Navigation Tabs -->

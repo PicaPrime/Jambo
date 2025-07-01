@@ -4,7 +4,7 @@
 <div class="faq-container">
   <!-- Header Section -->
   <div class="faq-header">
-    <h1>Frequently Asked Questions</h1>
+    <h1>{{ isset($faqTitle) ? $faqTitle : 'Frequently Asked Questions' }}</h1>
     <p>
       Find comprehensive answers to common questions about HustleBTC Bitcoin
       casino, cryptocurrency deposits, instant withdrawals, provably fair
